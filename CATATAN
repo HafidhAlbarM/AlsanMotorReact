@@ -1,0 +1,6 @@
+dependencies untuk react navigation
+npm install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
+
+
+untuk menampilkan icon, harus di link di android/app/build.gradle
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
