@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Dimensions, ImageBackground, StyleSheet, TextInput, ToastAndroid } from "react-native";
-import { Container, Content, View, Text } from 'native-base';
+import { Container, Content, View, Text, Input } from 'native-base';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -25,9 +25,9 @@ const Login = ({ navigation }) => {
             try {
               const jsonValue = JSON.stringify(dataLoginAsync)
               AsyncStorage.setItem('@dataUser', jsonValue)
-              console.log('sukses');
+              console.log('sukses', jsonValue);
             } catch (e) {
-              console.log('gagal');
+              console.log(e);
             }
             
             

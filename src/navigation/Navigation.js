@@ -25,7 +25,7 @@ const navigation = createStackNavigator(
     OrderHistoryDetailScreen: OrderHistoryDetail
   },
   {
-    initialRouteName: "OrderHistoryScreen",
+    initialRouteName: "ProductListScreen",
     headerMode:"none"
   }
 );

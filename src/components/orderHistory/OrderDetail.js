@@ -11,7 +11,7 @@ const OrderDetail = ({item}) => {
                 </View>
                 <View style={{flex:1, alignItems:"flex-start", justifyContent:"center"}}>
                     <Text>{item.kode_product}</Text>
-                    <Text>{item.nama_product}</Text>
+                    <Text>{item.Nama_Product}</Text>
                     <Text>{item.harga}</Text>
                 </View>
                 <View style={{flex:1, alignItems:"center", justifyContent:"center"}}>

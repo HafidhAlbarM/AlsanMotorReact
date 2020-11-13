@@ -3,6 +3,7 @@ import { Image } from "react-native";
 import { View, Text } from 'native-base';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { currencyFormat } from "../../function";
 
 const ProductRow = ({item, addToCart}) => {
     return (
@@ -12,10 +13,10 @@ const ProductRow = ({item, addToCart}) => {
             </View>
             <View style={{flex:1, alignItems:"flex-start"}}>
                 <Text>{item.Nama_Product}</Text>
-                <Text>{item.Harga_Jual}</Text>
+                <Text>{currencyFormat(item.Harga_Jual)}</Text>
             </View>
             <View style={{flex:1, alignItems:"center", justifyContent:"center"}}>
-                <TouchableOpacity onPress={()=>addToCart(item.Kode_Product)}>
+                <TouchableOpacity onPress={()=>addToCart(item.Kode_Product, item.Harga_Jual)}>
                     <IconFontAwesome name="plus" size={30}></IconFontAwesome>
                 </TouchableOpacity>
             </View>

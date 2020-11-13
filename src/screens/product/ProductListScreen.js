@@ -35,19 +35,22 @@ const ProductList = ({ navigation }) => {
         });
     }
 
-    const addToCart = async (Kode_Product)=>{
+    const addToCart = async (kode_product, harga_jual)=>{
        
         const dataFilter = dataCart.filter(
-            dataCart => dataCart.Kode_Product == Kode_Product
+            dataCart => dataCart.kode_product == kode_product
         )
 
         if(dataFilter.length==0){
             await dataCart.push({
-                Kode_Product: Kode_Product,
-                Qty: 1
+                kode_product: kode_product,
+                harga_jual: harga_jual,
+                qty: 1,
+                sub_total: harga_jual
             });
         }else{
-            dataFilter[0].Qty = await dataFilter[0].Qty + 1;
+            dataFilter[0].qty = await dataFilter[0].qty + 1;
+            dataFilter[0].sub_total = await (dataFilter[0].qty + 1) * dataFilter[0].sub_total;
         }
         setJumlahItemCart(dataCart.length);
     }
@@ -92,7 +95,7 @@ const ProductList = ({ navigation }) => {
                     <FlatList
                         data={dataProduct}
                         renderItem={renderItem}
-                        keyExtractor={(item) => item.Kode_Product}
+                        keyExtractor={(item, index) => index.toString()}
                     />
                 </View>
             </ImageBackground>

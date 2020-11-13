@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Image, Dimensions, ImageBackground, StyleSheet } from "react-native";
 import { Container, Header, Title, Content, Footer, View, Text, Button } from 'native-base';
 import Icon from 'react-native-vector-icons/Entypo';

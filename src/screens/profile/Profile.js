@@ -19,16 +19,16 @@ const Profile = ({ navigation }) => {
 
       const getDataUser = async () => {
         try {
-            let jsonValue = await AsyncStorage.getItem('@dataUser');
-            jsonValue = jsonValue != null ? JSON.parse(jsonValue) : null;
-            console.log(jsonValue[0]);
-            setPemilik(jsonValue[0].pemilik);
-            setMerkMobil(jsonValue[0].merk_mobil);
-            setNamaMobil(jsonValue[0].nama_mobil);
-            setPlatNomor(jsonValue[0].plat_nomor);
-            setEmail(jsonValue[0].email);
-            setJumlahCuci(jsonValue[0].jumlah_cuci);
-            return jsonValue;
+            let dataAsyncStorage = await AsyncStorage.getItem('@dataUser');
+            dataAsyncStorage = dataAsyncStorage != null ? JSON.parse(dataAsyncStorage) : null;
+            console.log(dataAsyncStorage[0]);
+            setPemilik(dataAsyncStorage[0].pemilik);
+            setMerkMobil(dataAsyncStorage[0].merk_mobil);
+            setNamaMobil(dataAsyncStorage[0].nama_mobil);
+            setPlatNomor(dataAsyncStorage[0].plat_nomor);
+            setEmail(dataAsyncStorage[0].email);
+            setJumlahCuci(dataAsyncStorage[0].jumlah_cuci);
+            return dataAsyncStorage;
         } catch(error) {
             console.log(error);
         }

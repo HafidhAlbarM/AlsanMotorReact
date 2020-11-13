@@ -1,30 +1,35 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Image, Dimensions, ImageBackground, FlatList, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
 import { Container, Header, Title, Content, Footer, View, Text, Button } from 'native-base';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import IconFeather from 'react-native-vector-icons/Feather';
+import axios from 'axios';
 
 import OrderDetail from '../../components/orderHistory/OrderDetail';
 
 const {height, width} = Dimensions.get("window");
 
 const OrderHistory = ({ navigation }) => {
-    const DATA = [
-    {
-        kode_pemesanan: "TR001",
-        kode_product: 'PR001',
-        nama_product: 'Laptop',
-        harga: 3000,
-        qty:2
-    },
-    {
-        kode_pemesanan: "TR001",
-        kode_product: 'PR002',
-        nama_product: 'Handphone',
-        harga: 4000,
-        qty:3
+    const kodePemesanan = navigation.state.params.kodePemesanan;
+    const [dataOrderDetail, setDataOrderDetail] = useState([]);
+
+    useEffect(()=>{
+        getDataOrderDetail()
+    }, []);
+
+    const getDataOrderDetail = () => {
+        axios.get(`http://localhost:3000/transaksi_pemesanan/get_detail/${kodePemesanan}`)
+        .then(function (response) {
+            setDataOrderDetail(response.data.data)
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+        .then(function () {
+            // always executed
+        });
     }
-    ];
 
     const renderItem = ({item}) => {
         return <OrderDetail item={item}/>
@@ -46,15 +51,15 @@ const OrderHistory = ({ navigation }) => {
                             </TouchableOpacity>    
                         </View>
                         <View style={ style.title }>
-                            <Text style={{fontSize:18, fontWeight: 'bold'}}>
-                                ORDER DETAIL TR001 <IconFeather name="package" size={20}></IconFeather>
+                            <Text style={{fontSize:15, fontWeight: 'bold'}}>
+                                ORDER DETAIL {kodePemesanan} <IconFeather name="package" size={20}></IconFeather>
                             </Text>
                         </View>
                 </View>
                 
                 <View style={ style.listTransaksi }>
                     <FlatList
-                        data={DATA}
+                        data={dataOrderDetail}
                         renderItem={renderItem}
                         keyExtractor={(item) => item.kode_product}
                     />

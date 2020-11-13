@@ -1,19 +1,102 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, Dimensions, ImageBackground, FlatList, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
 import { Container, Header, Title, Content, Footer, View, Text, Button } from 'native-base';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
+import { currencyFormat, currentDate } from "../../function";
+import AsyncStorage from '@react-native-community/async-storage';
 
 import CartRow from '../../components/cart/CartRow';
 
 const {height, width} = Dimensions.get("window");
 
 const Cart = ({ navigation }) => {
-    const DATA = navigation.state.params.dataCart;
+    const [kodeKaryawan, setKodeKaryawan] = useState("");
+    const [platNomor, setPlatNomor] = useState("");
+    const [tanggalPemesanan, setTanggalPemesanan] = useState("");
+    const [totalQty, setTotalQty] = useState(0);
+    let [total, setTotal] = useState(0);
+    const [status, setStatus] = useState("");
+    const [dataCart, setDataCart] = useState([]);
 
-    const renderItem = ({item}) => {
-        return <CartRow item={item}/>
+    useEffect(()=>{
+        getDataUser();
+        setCart();
+      }, []);
+
+    const getDataUser = async () => {
+        try {
+            let dataAsyncStorage = await AsyncStorage.getItem('@dataUser');
+            dataAsyncStorage = dataAsyncStorage != null ? JSON.parse(dataAsyncStorage) : null;
+            setKodeKaryawan('admin');
+            setPlatNomor(dataAsyncStorage[0].plat_nomor);
+            setTanggalPemesanan(currentDate());
+            setStatus('BELUM LUNAS');
+        } catch (error){
+            console.log(error);
+        }
     }
+
+    const handlePlus = (kode_product) => {
+        let dataItem = dataCart;
+
+        const dataFilter = dataItem.filter(
+            dataCart => dataCart.kode_product == kode_product
+        );
+
+        dataFilter[0].qty = dataFilter[0].qty + 1;
+
+        setTotal(total + dataFilter[0].harga_jual);
+        setTotalQty(totalQty + 1);
+        
+        setDataCart(dataItem);
+    }
+
+    const handleMinus = (kode_product) => {
+        let dataItem = dataCart;
+
+        const dataFilter = dataItem.filter(
+            dataCart => dataCart.kode_product == kode_product
+        );
+
+        dataFilter[0].qty = dataFilter[0].qty - 1;
+
+        setTotal(total - dataFilter[0].harga_jual);
+        setTotalQty(totalQty - 1);
+        
+        setDataCart(dataItem);
+    }
+
+    const setCart = async ()  => {
+        let dataParam = await navigation.state.params.dataCart;
+        
+        setDataCart(dataParam);
+
+        let qty=0;
+        let totalQty=0;
+        await dataParam.forEach(function(data){
+            qty = qty + data.qty;
+            totalQty = totalQty + (data.harga_jual * data.qty)
+        });
+
+        setTotalQty(qty);
+        setTotal(totalQty);
+    }
+
+    const handleSubmit = () => {
+        const data = {
+            kode_karyawan: kodeKaryawan,
+            plat_nomor: platNomor,
+            tanggal_pemesanan: tanggalPemesanan,
+            total_qty: totalQty,
+            total: total,
+            status: status
+        }
+    }
+
+    // const renderItem = ({item}) => {
+    //     return <CartRow item={item} handlePlus={handlePlus}/>
+    // }
       
     return(
         <Container>
@@ -40,18 +123,20 @@ const Cart = ({ navigation }) => {
                 
                 <View style={ style.listProduct }>
                     <FlatList
-                        data={DATA}
-                        renderItem={renderItem}
-                        keyExtractor={(item) => item.Kode_Product}
+                        data={dataCart}
+                        renderItem={({item, index}) => (
+                            <CartRow item={item} handlePlus={handlePlus} handleMinus={handleMinus}/>
+                        )}
+                        keyExtractor={(item) => item.kode_product}
                     />
                 </View>
 
                 <View style={ style.sumary }>
-                    <Text style={{fontWeight: 'bold'}}>Total Qty: 4</Text>
-                    <Text style={{fontWeight: 'bold'}}>Total Amount: Rp. 28000</Text>
+                    <Text style={{fontWeight: 'bold'}}>Total Qty: {totalQty}</Text>
+                    <Text style={{fontWeight: 'bold'}}>Total Amount: {currencyFormat(total)}</Text>
                 </View>
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => handleSubmit()}>
                     <View style={ style.placeToOrderStyle }>
                         <Text style={{fontWeight: 'bold'}}>Place Your Order</Text>
                     </View>
