@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Image, Dimensions, ImageBackground, StyleSheet } from "react-native";
 import { Container, Header, Content, View, Text } from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const {height, width} = Dimensions.get("window");
 
@@ -80,6 +81,11 @@ const Profile = ({ navigation }) => {
                       <View style={{flex:2}}>
                         <Text style={{fontWeight:"bold", marginBottom:20}}>{jumlah_cuci}</Text>
                       </View>
+                    </View >
+                    <View>
+                      <TouchableOpacity onPress={() => navigation.navigate("OrderHistoryScreen")}>
+                        <Text style={style.btnLogStyle}>Order History</Text>
+                      </TouchableOpacity>
                     </View>
                   </View>
               </View>
@@ -99,6 +105,16 @@ const style = StyleSheet.create({
     viewContent: {
       flexDirection: "row", 
       height: height-(height*0.30)
+    },
+    btnLogStyle:{
+        alignSelf:"center",
+        flexDirection:"row", 
+        height: 60, 
+        marginHorizontal:20, 
+        backgroundColor:"#f5c542", 
+        borderRadius:20,
+        justifyContent:"center",
+        padding:20,
     }
 });
 

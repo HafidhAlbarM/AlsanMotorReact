@@ -4,20 +4,34 @@ import { Container, Header, Title, Content, Footer, View, Text, Button } from 'n
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import IconFeather from 'react-native-vector-icons/Feather';
 import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import OrderList from '../../components/orderHistory/OrderList';
 
 const {height, width} = Dimensions.get("window");
 
 const OrderHistory = ({ navigation }) => {
+    const [platNomor, setPlatNomor] = useState("");
     const [dataHistory, setDataHistory] = useState([]);
 
     useEffect(()=>{
-        getDataOrder()
-    }, [])
+        getDataUser();
+    }, []);
 
-    const getDataOrder = () => {
-        axios.get('http://localhost:3000/transaksi_pemesanan/B8872KG')
+    const getDataUser = async () => {
+        try {
+            let dataAsyncStorage = await AsyncStorage.getItem('@dataUser');
+            dataAsyncStorage = dataAsyncStorage != null ? JSON.parse(dataAsyncStorage) : null;
+            console.log(dataAsyncStorage[0]);
+            setPlatNomor(dataAsyncStorage[0].plat_nomor);
+            getDataOrder(dataAsyncStorage[0].plat_nomor);
+        } catch(error) {
+            console.log(error);
+        }
+      }
+
+    const getDataOrder = (platNomor) => {
+        axios.get(`http://localhost:3000/transaksi_pemesanan/${platNomor}`)
         .then(function (response) {
             // handle success
             setDataHistory(response.data.data);
@@ -44,7 +58,7 @@ const OrderHistory = ({ navigation }) => {
             >   
                 <View style={ style.headerStyle }>
                         <View style={ style.backButton }>
-                            <TouchableOpacity onPress={()=>navigation.navigate("ProductListScreen")}>
+                            <TouchableOpacity onPress={()=>navigation.goBack()}>
                                 <Text>
                                     <IconIonicons name="ios-chevron-back-circle-outline" size={30}></IconIonicons>
                                 </Text>

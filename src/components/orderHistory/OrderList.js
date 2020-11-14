@@ -14,6 +14,7 @@ const OrderList = ({item, navigation}) => {
                 <View style={{flex:1, alignItems:"flex-start", justifyContent:"center"}}>
                     <Text>{item.kode_pemesanan}</Text>
                     <Text>{new Date(item.tanggal_pemesanan).toDateString()}</Text>
+                    <Text>{item.status}</Text>
                 </View>
             </View>
         </TouchableOpacity>

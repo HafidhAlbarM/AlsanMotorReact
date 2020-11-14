@@ -5,9 +5,6 @@ import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const CartRow = ({item, handlePlus, handleMinus}) => {
-    console.log('wew');
-    console.log('itemnya', item.qty);
-
     return (
         <View style={{flexDirection:"row", marginBottom:20, borderRadius:10, paddingVertical:30, backgroundColor:"white"}}>
             <View style={{flex:1, alignItems:"center", justifyContent:"center"}}>

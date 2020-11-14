@@ -17,8 +17,8 @@ const ProductList = ({ navigation }) => {
     const [jumlahItemCart, setJumlahItemCart] = useState(0);
 
     useEffect(()=>{
-        getDataProduct()
-    }, [])
+        getDataProduct();
+    }, []);
 
     const getDataProduct = () => {
         axios.get('http://localhost:3000/product')
@@ -58,7 +58,7 @@ const ProductList = ({ navigation }) => {
     const renderItem = ({item}) => {
         return <ProductRow item={item} addToCart={addToCart}/>
     }
-      
+    
     return(
         <Container>
           <View>

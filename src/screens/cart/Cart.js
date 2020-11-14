@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Image, Dimensions, ImageBackground, FlatList, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
+import { Image, Dimensions, ImageBackground, FlatList, ScrollView, TouchableOpacity, StyleSheet, ToastAndroid } from "react-native";
 import { Container, Header, Title, Content, Footer, View, Text, Button } from 'native-base';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import { currencyFormat, currentDate } from "../../function";
 import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
 
 import CartRow from '../../components/cart/CartRow';
 
@@ -45,6 +46,7 @@ const Cart = ({ navigation }) => {
         );
 
         dataFilter[0].qty = dataFilter[0].qty + 1;
+        dataFilter[0].sub_total = dataFilter[0].harga_jual * dataFilter[0].qty;
 
         setTotal(total + dataFilter[0].harga_jual);
         setTotalQty(totalQty + 1);
@@ -60,6 +62,7 @@ const Cart = ({ navigation }) => {
         );
 
         dataFilter[0].qty = dataFilter[0].qty - 1;
+        dataFilter[0].sub_total = dataFilter[0].harga_jual * dataFilter[0].qty;
 
         setTotal(total - dataFilter[0].harga_jual);
         setTotalQty(totalQty - 1);
@@ -84,19 +87,46 @@ const Cart = ({ navigation }) => {
     }
 
     const handleSubmit = () => {
-        const data = {
-            kode_karyawan: kodeKaryawan,
-            plat_nomor: platNomor,
-            tanggal_pemesanan: tanggalPemesanan,
-            total_qty: totalQty,
-            total: total,
-            status: status
+        const transaksi_pemesanan_detail = [];
+
+        dataCart.forEach(function(data){
+            transaksi_pemesanan_detail.push({
+                "kode_product": data.kode_product,
+                "harga": data.harga_jual,
+                "qty": data.qty,
+                "sub_total":data.sub_total
+            });
+        });
+
+        if(transaksi_pemesanan_detail.length != 0){
+            const dataInsert = {
+                kode_karyawan: kodeKaryawan,
+                plat_nomor: platNomor,
+                tanggal_pemesanan: tanggalPemesanan,
+                total_qty: totalQty,
+                total: total,
+                status: status,
+                transaksi_pemesanan_detail: transaksi_pemesanan_detail
+            }
+
+            axios.post('http://localhost:3000/transaksi_pemesanan', dataInsert)
+            .then(res => {
+                if(res.data.success){
+                    navigation.navigate("HomeScreen");
+                    
+                    ToastAndroid.show(res.data.message, ToastAndroid.SHORT);
+                }else{
+                    ToastAndroid.show(res.data.message, ToastAndroid.SHORT);
+                }
+                
+            }).catch(err => console.log(err));
         }
     }
 
-    // const renderItem = ({item}) => {
-    //     return <CartRow item={item} handlePlus={handlePlus}/>
-    // }
+    const renderItem = ({item}) => {
+        return <CartRow item={item} handlePlus={handlePlus} handleMinus={handleMinus}/>
+    }
+    
       
     return(
         <Container>
@@ -124,9 +154,7 @@ const Cart = ({ navigation }) => {
                 <View style={ style.listProduct }>
                     <FlatList
                         data={dataCart}
-                        renderItem={({item, index}) => (
-                            <CartRow item={item} handlePlus={handlePlus} handleMinus={handleMinus}/>
-                        )}
+                        renderItem={renderItem}
                         keyExtractor={(item) => item.kode_product}
                     />
                 </View>

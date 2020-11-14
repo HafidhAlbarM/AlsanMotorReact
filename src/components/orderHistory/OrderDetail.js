@@ -2,6 +2,7 @@ import React from "react";
 import { Image, Dimensions, ImageBackground, FlatList, TextInput } from "react-native";
 import { Container, Header, Title, Content, Footer, View, Text, Button  } from 'native-base';
 import Icon from 'react-native-vector-icons/Feather';
+import { currencyFormat } from "../../function";
 
 const OrderDetail = ({item}) => {
     return (
@@ -12,7 +13,7 @@ const OrderDetail = ({item}) => {
                 <View style={{flex:1, alignItems:"flex-start", justifyContent:"center"}}>
                     <Text>{item.kode_product}</Text>
                     <Text>{item.Nama_Product}</Text>
-                    <Text>{item.harga}</Text>
+                    <Text>{currencyFormat(item.harga)}</Text>
                 </View>
                 <View style={{flex:1, alignItems:"center", justifyContent:"center"}}>
                 <View style={{flexDirection:"column", backgroundColor:'#FFDA66', padding:20, borderRadius:50, height:50, justifyContent:"center"}}>
