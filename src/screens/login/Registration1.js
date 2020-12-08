@@ -7,12 +7,14 @@ const {height, width} = Dimensions.get("window");
 
 const Registration1 = ({ navigation }) => {
       const [pemilik, setPemilik] = useState('');
+      const [alamat, setAalamat] = useState('');
       const [User_Id, setUserId] = useState('');
       const [email, setEmail] = useState('');
       const [Password, setPassword] = useState('');
 
       const dataUser = {
           pemilik: pemilik,
+          alamat: alamat,
           User_Id: User_Id,
           email: email,
           Password: Password
@@ -22,6 +24,8 @@ const Registration1 = ({ navigation }) => {
           let message = "";
           if(dataUser.User_Id == "") {
             message="User Id harus di isi";
+          }else if(dataUser.alamat == ""){
+            message="Alamat harus diisi";
           }else if(dataUser.email == ""){
             message="E Mail Id harus di isi";
           }else if(dataUser.Password == ""){
@@ -53,6 +57,9 @@ const Registration1 = ({ navigation }) => {
                     <Text style={{fontWeight: 'bold', marginBottom:15}}>Car Owner's Name</Text>
                     <TextInput placeholder="User Id" style={style.textInputStyle} onChangeText={(value)=>{setPemilik(value)}}/>
 
+                    <Text style={{fontWeight: 'bold', marginBottom:15}}>Car Owner's Address</Text>
+                    <TextInput placeholder="Address" style={style.textInputStyle} onChangeText={(value)=>{setAalamat(value)}}/>
+
                     <Text style={{fontWeight: 'bold', marginBottom:15}}>User Id</Text>
                     <TextInput placeholder="User Id" style={style.textInputStyle} onChangeText={(value)=>setUserId(value)}/>
 
@@ -60,7 +67,7 @@ const Registration1 = ({ navigation }) => {
                     <TextInput placeholder="User Id" style={style.textInputStyle} onChangeText={(value)=>setEmail(value)}/>
 
                     <Text style={{fontWeight: 'bold', marginBottom:15}}>Password</Text>
-                    <TextInput placeholder="Password" style={style.textInputStyle} onChangeText={(value)=>{setPassword(value)}}/>
+                    <TextInput placeholder="Password" style={style.textInputStyle} secureTextEntry={true} onChangeText={(value)=>{setPassword(value)}}/>
 
                     <TouchableOpacity onPress={()=>validasi()}>
                       <View style={ style.buttonLoginStyle }>

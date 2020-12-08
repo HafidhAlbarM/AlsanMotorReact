@@ -8,6 +8,7 @@ const {height, width} = Dimensions.get("window");
 
 const Profile = ({ navigation }) => {
       const [pemilik, setPemilik] = useState("");
+      const [alamat, setAlamat] = useState("");
       const [merk_mobil, setMerkMobil] = useState("");
       const [nama_mobil, setNamaMobil] = useState("");
       const [plat_nomor, setPlatNomor] = useState("");
@@ -24,6 +25,7 @@ const Profile = ({ navigation }) => {
             dataAsyncStorage = dataAsyncStorage != null ? JSON.parse(dataAsyncStorage) : null;
             console.log(dataAsyncStorage[0]);
             setPemilik(dataAsyncStorage[0].pemilik);
+            setAlamat(dataAsyncStorage[0].alamat);
             setMerkMobil(dataAsyncStorage[0].merk_mobil);
             setNamaMobil(dataAsyncStorage[0].nama_mobil);
             setPlatNomor(dataAsyncStorage[0].plat_nomor);
@@ -76,6 +78,14 @@ const Profile = ({ navigation }) => {
                     </View>
                     <View style={{flexDirection:"row"}}>
                       <View style={{flex:1, marginHorizontal:10}}>
+                        <Text style={{fontWeight:"bold", marginBottom:20}}>Address :</Text>
+                      </View>
+                      <View style={{flex:2}}>
+                        <Text style={{fontWeight:"bold", marginBottom:20}}>{alamat}</Text>
+                      </View>
+                    </View>
+                    <View style={{flexDirection:"row"}}>
+                      <View style={{flex:1, marginHorizontal:10}}>
                         <Text style={{fontWeight:"bold", marginBottom:20}}>Total Wash :</Text>
                       </View>
                       <View style={{flex:2}}>
@@ -109,12 +119,12 @@ const style = StyleSheet.create({
     btnLogStyle:{
         alignSelf:"center",
         flexDirection:"row", 
-        height: 60, 
+        height: 40, 
         marginHorizontal:20, 
         backgroundColor:"#f5c542", 
         borderRadius:20,
         justifyContent:"center",
-        padding:20,
+        padding:10,
     }
 });
 

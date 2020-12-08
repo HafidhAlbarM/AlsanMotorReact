@@ -22,7 +22,6 @@ const OrderHistory = ({ navigation }) => {
         try {
             let dataAsyncStorage = await AsyncStorage.getItem('@dataUser');
             dataAsyncStorage = dataAsyncStorage != null ? JSON.parse(dataAsyncStorage) : null;
-            console.log(dataAsyncStorage[0]);
             setPlatNomor(dataAsyncStorage[0].plat_nomor);
             getDataOrder(dataAsyncStorage[0].plat_nomor);
         } catch(error) {
@@ -34,7 +33,11 @@ const OrderHistory = ({ navigation }) => {
         axios.get(`http://localhost:3000/transaksi_pemesanan/${platNomor}`)
         .then(function (response) {
             // handle success
-            setDataHistory(response.data.data);
+            if(response.data.data = "Tidak ada data"){
+                setDataHistory([]);
+            }else{
+                setDataHistory(response.data.data);
+            }
         })
         .catch(function (error) {
             // handle error
@@ -72,6 +75,11 @@ const OrderHistory = ({ navigation }) => {
                 </View>
                 
                 <View style={ style.listTransaksi }>
+                    {dataHistory.length == 0 && (
+                        <View style={{alignItems:"center"}}>
+                            <Text>Belum Ada Pemesanan</Text>    
+                        </View>
+                    )}
                     <FlatList
                         data={dataHistory}
                         renderItem={renderItem}

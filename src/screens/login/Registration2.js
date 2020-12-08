@@ -38,7 +38,8 @@ const Registration1 = ({ navigation }) => {
             "plat_nomor":plat_nomor,
             "merk_mobil":merk_mobil,
             "nama_mobil":nama_mobil,
-            "pemilik":dataUser.pemilik
+            "pemilik":dataUser.pemilik,
+            "alamat": dataUser.alamat
           }
   
           axios.post('http://localhost:3000/user/register', dataInsert)

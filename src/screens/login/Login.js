@@ -59,6 +59,10 @@ const Login = ({ navigation }) => {
                             <Text style={{fontWeight: 'bold'}}>Login</Text>
                         </View>
                       </TouchableOpacity>
+
+                      <TouchableOpacity onPress={()=>navigation.navigate("Registration1Screen")} style={style.registerLink}>
+                        <Text>Don't have an accout? click here</Text>
+                      </TouchableOpacity>
                   </View>
               </View>
           </Content>
@@ -83,6 +87,13 @@ const style = StyleSheet.create({
         justifyContent:"center",
         padding:20,
     },
+    registerLink: {
+      flexDirection:"row",
+      marginHorizontal:10,
+      paddingTop:10, 
+      borderRadius:20,
+      justifyContent:"center"
+  },
     textInputStyle:{
         backgroundColor:"white", 
         borderRadius:10, 

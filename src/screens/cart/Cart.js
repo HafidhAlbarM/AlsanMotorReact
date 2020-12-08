@@ -14,6 +14,7 @@ const {height, width} = Dimensions.get("window");
 const Cart = ({ navigation }) => {
     const [kodeKaryawan, setKodeKaryawan] = useState("");
     const [platNomor, setPlatNomor] = useState("");
+    const [email, setEmail] = useState("");
     const [tanggalPemesanan, setTanggalPemesanan] = useState("");
     const [totalQty, setTotalQty] = useState(0);
     let [total, setTotal] = useState(0);
@@ -31,6 +32,7 @@ const Cart = ({ navigation }) => {
             dataAsyncStorage = dataAsyncStorage != null ? JSON.parse(dataAsyncStorage) : null;
             setKodeKaryawan('admin');
             setPlatNomor(dataAsyncStorage[0].plat_nomor);
+            setEmail(dataAsyncStorage[0].email);
             setTanggalPemesanan(currentDate());
             setStatus('BELUM LUNAS');
         } catch (error){
@@ -101,6 +103,7 @@ const Cart = ({ navigation }) => {
         if(transaksi_pemesanan_detail.length != 0){
             const dataInsert = {
                 kode_karyawan: kodeKaryawan,
+                email: email,
                 plat_nomor: platNomor,
                 tanggal_pemesanan: tanggalPemesanan,
                 total_qty: totalQty,
