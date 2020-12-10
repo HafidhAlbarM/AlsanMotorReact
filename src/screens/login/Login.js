@@ -26,6 +26,8 @@ const Login = ({ navigation }) => {
               const jsonValue = JSON.stringify(dataLoginAsync)
               AsyncStorage.setItem('@dataUser', jsonValue)
               console.log('sukses', jsonValue);
+              setUserId("");
+              setPassword("");
             } catch (e) {
               console.log(e);
             }
@@ -49,10 +51,10 @@ const Login = ({ navigation }) => {
               <View style={ style.viewContent }>
                   <View style={{flexDirection:"column", flex:1}}>
                       <Text style={{fontWeight: 'bold', marginBottom:15}}>User Id/Email</Text>
-                      <TextInput placeholder="User Id" style={style.textInputStyle} onChangeText={(value)=>{setUserId(value)}}/>
+                      <TextInput placeholder="User Id" style={style.textInputStyle} onChangeText={(value)=>{setUserId(value)}} value={User_Id}/>
 
                       <Text style={{fontWeight: 'bold', marginBottom:15}}>Password</Text>
-                      <TextInput placeholder="Password" style={style.textInputStyle} secureTextEntry={true} onChangeText={(value)=>{setPassword(value)}}/>
+                      <TextInput placeholder="Password" style={style.textInputStyle} secureTextEntry={true} onChangeText={(value)=>{setPassword(value)}} value={Password}/>
                       
                       <TouchableOpacity onPress={()=>handleLogin()}>
                         <View style={ style.buttonLoginStyle }>
