@@ -23,6 +23,7 @@ const OrderHistory = ({ navigation }) => {
             let dataAsyncStorage = await AsyncStorage.getItem('@dataUser');
             dataAsyncStorage = dataAsyncStorage != null ? JSON.parse(dataAsyncStorage) : null;
             setPlatNomor(dataAsyncStorage[0].plat_nomor);
+            console.log(dataAsyncStorage[0].plat_nomor);
             getDataOrder(dataAsyncStorage[0].plat_nomor);
         } catch(error) {
             console.log(error);
@@ -33,10 +34,16 @@ const OrderHistory = ({ navigation }) => {
         axios.get(`http://localhost:3000/transaksi_pemesanan/${platNomor}`)
         .then(function (response) {
             // handle success
-            if(response.data.data = "Tidak ada data"){
-                setDataHistory([]);
+            if(response.data.data.length >= 1){
+                if(response.data.data.length == 1){
+                    let dataHistoryNya = [];
+                    dataHistoryNya.push(response.data.data[0])
+                    setDataHistory(dataHistoryNya);
+                }else{
+                    setDataHistory(response.data.data);
+                }
             }else{
-                setDataHistory(response.data.data);
+                setDataHistory([]);
             }
         })
         .catch(function (error) {
@@ -51,6 +58,7 @@ const OrderHistory = ({ navigation }) => {
     const renderItem = ({item}) => {
         return <OrderList item={item} navigation={navigation}/>
     }
+    // console.log('datanya', dataHistory);
       
     return(
         <Container>
