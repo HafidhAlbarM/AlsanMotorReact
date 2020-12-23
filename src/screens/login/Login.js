@@ -4,6 +4,7 @@ import { Container, Content, View, Text, Input } from 'native-base';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import {API_URL} from 'react-native-dotenv';
 
 const {height, width} = Dimensions.get("window");
 
@@ -17,8 +18,9 @@ const Login = ({ navigation }) => {
           Password: Password
         }
 
-        axios.post('http://localhost:3000/user/login', dataLogin)
+        axios.post(`${API_URL}user/login`, dataLogin)
         .then(res => {
+          // console.log(res.data);
           if(res.data.data.length>0){
             const dataLoginAsync = res.data.data;
 
@@ -41,6 +43,7 @@ const Login = ({ navigation }) => {
         })
       }
 
+      // console.log(API_URL);
       return (
         <Container>
           <ImageBackground

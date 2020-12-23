@@ -4,6 +4,7 @@ import { Container, View, Text } from 'native-base';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
+import {API_URL} from 'react-native-dotenv';
 
 import ProductRow from '../../components/product/ProductRow';
 
@@ -21,7 +22,7 @@ const ProductList = ({ navigation }) => {
     }, []);
 
     const getDataProduct = () => {
-        axios.get('http://localhost:3000/product')
+        axios.get(`${API_URL}product`)
         .then(function (response) {
             // handle success
             setDataProduct(response.data.data);

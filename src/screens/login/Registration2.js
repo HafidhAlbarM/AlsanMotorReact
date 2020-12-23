@@ -3,6 +3,7 @@ import { Dimensions, ImageBackground, StyleSheet, TextInput, ToastAndroid } from
 import { Container, Content, View, Text } from 'native-base';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import axios from 'axios';
+import {API_URL} from 'react-native-dotenv';
 
 const {height, width} = Dimensions.get("window");
 
@@ -42,7 +43,7 @@ const Registration1 = ({ navigation }) => {
             "alamat": dataUser.alamat
           }
   
-          axios.post('http://localhost:3000/user/register', dataInsert)
+          axios.post(`${API_URL}user/register`, dataInsert)
           .then(res => {
             if(res.data.success){
               navigation.navigate('LoginScreen');

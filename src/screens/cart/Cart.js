@@ -6,6 +6,7 @@ import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import { currencyFormat, currentDate } from "../../function";
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import {API_URL} from 'react-native-dotenv';
 
 import CartRow from '../../components/cart/CartRow';
 
@@ -112,7 +113,7 @@ const Cart = ({ navigation }) => {
                 transaksi_pemesanan_detail: transaksi_pemesanan_detail
             }
 
-            axios.post('http://localhost:3000/transaksi_pemesanan', dataInsert)
+            axios.post(`${API_URL}transaksi_pemesanan`, dataInsert)
             .then(res => {
                 if(res.data.success){
                     navigation.navigate("HomeScreen");

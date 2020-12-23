@@ -5,6 +5,7 @@ import IconIonicons from 'react-native-vector-icons/Ionicons';
 import IconFeather from 'react-native-vector-icons/Feather';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import {API_URL} from 'react-native-dotenv';
 
 import OrderList from '../../components/orderHistory/OrderList';
 
@@ -31,7 +32,7 @@ const OrderHistory = ({ navigation }) => {
       }
 
     const getDataOrder = (platNomor) => {
-        axios.get(`http://localhost:3000/transaksi_pemesanan/${platNomor}`)
+        axios.get(`${API_URL}transaksi_pemesanan/${platNomor}`)
         .then(function (response) {
             // handle success
             if(response.data.data.length >= 1){

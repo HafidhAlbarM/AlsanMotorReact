@@ -4,6 +4,7 @@ import { Container, Header, Title, Content, Footer, View, Text, Button } from 'n
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import IconFeather from 'react-native-vector-icons/Feather';
 import axios from 'axios';
+import {API_URL} from 'react-native-dotenv';
 
 import OrderDetail from '../../components/orderHistory/OrderDetail';
 
@@ -18,7 +19,7 @@ const OrderHistory = ({ navigation }) => {
     }, []);
 
     const getDataOrderDetail = () => {
-        axios.get(`http://localhost:3000/transaksi_pemesanan/get_detail/${kodePemesanan}`)
+        axios.get(`${API_URL}transaksi_pemesanan/get_detail/${kodePemesanan}`)
         .then(function (response) {
             setDataOrderDetail(response.data.data)
         })
