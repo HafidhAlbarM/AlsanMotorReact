@@ -112,7 +112,8 @@ const Cart = ({ navigation }) => {
                 status: status,
                 transaksi_pemesanan_detail: transaksi_pemesanan_detail
             }
-
+            console.log(`${API_URL}transaksi_pemesanan`);
+            
             axios.post(`${API_URL}transaksi_pemesanan`, dataInsert)
             .then(res => {
                 if(res.data.success){

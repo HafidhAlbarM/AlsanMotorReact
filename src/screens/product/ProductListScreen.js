@@ -11,6 +11,7 @@ import ProductRow from '../../components/product/ProductRow';
 const {height, width} = Dimensions.get("window");
 
 const ProductList = ({ navigation }) => {
+    console.log('URLnya di produk',API_URL);
     const [dataProduct, setDataProduct] = useState([]);
 
     const [dataCart, setDataCart] = useState([]);

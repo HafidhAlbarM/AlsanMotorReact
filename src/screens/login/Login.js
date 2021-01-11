@@ -43,7 +43,8 @@ const Login = ({ navigation }) => {
         })
       }
 
-      // console.log(API_URL);
+      console.log('urlnya di login',API_URL);
+
       return (
         <Container>
           <ImageBackground

@@ -10,6 +10,7 @@ const {height, width} = Dimensions.get("window");
 
 
 const Registration1 = ({ navigation }) => {
+      console.log('urlnya di registrasi',API_URL);
       const dataUser = navigation.state.params.dataUser;
 
       const [plat_nomor, setPlatNomor] = useState("");
