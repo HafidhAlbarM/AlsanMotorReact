@@ -1,4 +1,4 @@
-package com.albums;
+package com.hafidh.alsan;
 
 import com.facebook.react.ReactActivity;
 
